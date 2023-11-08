@@ -1,11 +1,12 @@
 import OpenAI from "openai";
 import "dotenv/config";
 import { createRequire } from "module";
-const app = express();
+
 const port = 8080 || process.env.PORT;
 const require = createRequire(import.meta.url);
 require("dotenv").config();
 const express = require('express');
+const app = express();
 const path = require('path');
 
 app.use(express.json());
