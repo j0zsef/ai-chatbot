@@ -1,9 +1,14 @@
-import Chat from '../../components/Chat';
+'use client';
+
+import Chat from '@/components/Chat';
+import { ChatHistoryProvider } from '@/contexts/ChatHistoryContext';
 
 const Home = () => {
   return (
     <main>
-      <Chat />
+      <ChatHistoryProvider>
+        <Chat />
+      </ChatHistoryProvider>
     </main>
   );
 };

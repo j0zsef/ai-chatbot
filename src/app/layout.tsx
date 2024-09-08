@@ -3,7 +3,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Chatbot',
-  description: 'Chatbot with React',
+  description: 'Chatbot with React & Next',
 };
 
 const RootLayout = ({

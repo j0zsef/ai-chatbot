@@ -1,5 +1,5 @@
-# AI Chatbot
-Proof of concept for an AI chatbot using Next.js and React.
+# AI Chatbot with React & Next
+Proof of concept for an AI chatbot using React & Next.
 
 ## Getting Started
 
