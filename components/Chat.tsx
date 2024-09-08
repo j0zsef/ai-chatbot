@@ -1,31 +1,30 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import getChatResponse from '../lib/chat';
+import ChatHistory from './ChatHistory';
 
 const Chat = () => {
-  const [chatOutput, setChatOutput] = useState<string>();
-  const chatInput = useRef<HTMLInputElement | null>(null);
+  const [chatInput, setChatInput] = useState<string>();
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const sendMessage = async () => {
-    if (!chatInput.current) {
-      return;
+  const handleSetChatHistory = () => {
+    if (inputRef.current) {
+      setChatInput(inputRef.current.value);
+      inputRef.current.value = '';
     }
-
-    const chatResponse = await getChatResponse(chatInput.current.value);
-    setChatOutput(() => chatResponse);
   };
 
   return (
     <div>
-      <h1>Chat Sir</h1>
-      { chatOutput && <p id="chat-output">{chatOutput}</p> }
+      <h1>Chat Bot</h1>
+      <h2>Chat History</h2>
+      {chatInput && <ChatHistory key={chatInput} chatInput={chatInput} />}
       <br />
       <label htmlFor="chat-input">
         Enter your message
-        <input id="chat-input" ref={chatInput} />
+        <input id="chat-input" ref={inputRef} />
       </label>
-      <button onClick={sendMessage} type="button">Send</button>
+      <button onClick={() => handleSetChatHistory()} type="button">Send</button>
     </div>
   );
 };
