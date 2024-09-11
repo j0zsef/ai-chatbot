@@ -1,6 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
+import {
+  Grid2, Divider, Paper, TextField, Button, Typography, Container,
+} from '@mui/material';
 import ChatHistory from './ChatHistory';
 
 const Chat = () => {
@@ -14,20 +17,35 @@ const Chat = () => {
     input.value = '';
   };
 
+  const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    const input = event.target;
+    input.value = '';
+  };
+
   return (
-    <div>
-      <h1>Chat Bot</h1>
-      <h2>Chat History</h2>
-      {chatInput && <ChatHistory chatInput={chatInput} />}
-      <br />
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="chat-input">
-          Enter your message
-          <input id="chat-input" name="chat-input" />
-        </label>
-        <button type="submit">Send</button>
-      </form>
-    </div>
+    <Grid2 container>
+      <Container>
+        <Paper square={false}>
+          <Typography variant="h6" style={{ paddingLeft: '16px' }}>
+            Chat History
+          </Typography>
+          <Divider />
+          {chatInput && <ChatHistory chatInput={chatInput} />}
+          <Divider />
+          <form onSubmit={handleSubmit} style={{ display: 'flex', alignItems: 'center' }}>
+            <TextField
+              required
+              id="chat-input"
+              defaultValue="Enter your message"
+              variant="standard"
+              onFocus={handleFocus}
+              style={{ paddingLeft: '16px', flexGrow: 1 }}
+            />
+            <Button type="submit" style={{ marginLeft: 'auto' }}>Send</Button>
+          </form>
+        </Paper>
+      </Container>
+    </Grid2>
   );
 };
 

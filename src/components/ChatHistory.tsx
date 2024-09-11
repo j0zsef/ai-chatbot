@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react';
 import getChatResponse from '@/lib/chat';
+import {
+  List, ListItem, ListItemAvatar, ListItemText, ListSubheader,
+} from '@mui/material';
+import { ListGroup } from 'react-bootstrap';
 import { useChatHistory } from '../contexts/ChatHistoryContext';
 
 interface ChatHistoryProps {
@@ -30,31 +34,24 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({ chatInput }) => {
 
   return (
     chatHistory && chatHistory.map((chatHistoryEntry) => (
-      <div key={chatHistoryEntry.time.getTime()}>
-        <label htmlFor="chat-input">
-          Chat Input:
-          <span id="chat-input">
-            {' '}
-            {chatHistoryEntry.input}
-          </span>
-        </label>
-        <br />
-        <label htmlFor="chat-output">
-          Chat Output:
-          <span id="chat-output">
-            {' '}
-            {chatHistoryEntry.output}
-          </span>
-        </label>
-        <br />
-        <label htmlFor="chat-time">
-          Time:
-          <span id="chat-time">
-            {' '}
-            {chatHistoryEntry.time.toLocaleString()}
-          </span>
-        </label>
-      </div>
+      <List key={chatHistoryEntry.time.getTime()}>
+        <ListGroup>
+          <ListSubheader>{chatHistoryEntry.time.toLocaleString()}</ListSubheader>
+          <ListItem id="chat-input">
+            <ListItemAvatar>Chat Input:</ListItemAvatar>
+            <ListItemText>
+              {chatHistoryEntry.input}
+            </ListItemText>
+          </ListItem>
+          <br />
+          <ListItem id="chat-output">
+            <ListItemAvatar>Chat Output:</ListItemAvatar>
+            <ListItemText>
+              {chatHistoryEntry.output}
+            </ListItemText>
+          </ListItem>
+        </ListGroup>
+      </List>
     ))
   );
 };
