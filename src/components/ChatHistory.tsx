@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import getChatResponse from '@/lib/chat';
 import {
-  List, ListItem, ListItemAvatar, ListItemText, ListSubheader,
+  List, ListItem, ListItemAvatar, ListItemText, ListSubheader, Avatar, Paper,
 } from '@mui/material';
-import { ListGroup } from 'react-bootstrap';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import SmartToySharpIcon from '@mui/icons-material/SmartToySharp';
 import { useChatHistory } from '../contexts/ChatHistoryContext';
 
 interface ChatHistoryProps {
@@ -35,22 +36,44 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({ chatInput }) => {
   return (
     chatHistory && chatHistory.map((chatHistoryEntry) => (
       <List key={chatHistoryEntry.time.getTime()}>
-        <ListGroup>
+        <List>
           <ListSubheader>{chatHistoryEntry.time.toLocaleString()}</ListSubheader>
-          <ListItem id="chat-input">
-            <ListItemAvatar>Chat Input:</ListItemAvatar>
-            <ListItemText>
-              {chatHistoryEntry.input}
-            </ListItemText>
-          </ListItem>
+          <Paper
+            elevation={3}
+            style={{
+              padding: '10px', borderRadius: '10px', backgroundColor: '#e0f7fa', width: 'fit-content',
+            }}
+          >
+            <ListItem id="chat-input">
+              <ListItemAvatar>
+                <Avatar>
+                  <AccountBoxIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText>
+                {chatHistoryEntry.input}
+              </ListItemText>
+            </ListItem>
+          </Paper>
           <br />
-          <ListItem id="chat-output">
-            <ListItemAvatar>Chat Output:</ListItemAvatar>
-            <ListItemText>
-              {chatHistoryEntry.output}
-            </ListItemText>
-          </ListItem>
-        </ListGroup>
+          <Paper
+            elevation={3}
+            style={{
+              padding: '10px', borderRadius: '10px', backgroundColor: '#f1f8e9', width: 'fit-content',
+            }}
+          >
+            <ListItem id="chat-output" style={{ justifyContent: 'flex-end' }}>
+              <ListItemAvatar>
+                <Avatar>
+                  <SmartToySharpIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText style={{ flex: 'inherit' }}>
+                {chatHistoryEntry.output}
+              </ListItemText>
+            </ListItem>
+          </Paper>
+        </List>
       </List>
     ))
   );
