@@ -30,7 +30,7 @@ module.exports = {
   },
   plugins: [
     'react',
-    '@typescript-eslint',
+    '@typescript-eslint/eslint-plugin',
   ],
   rules: {
     'arrow-body-style': 'off',

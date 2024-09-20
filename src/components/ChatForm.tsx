@@ -2,11 +2,11 @@
 
 import React, { useState } from 'react';
 import {
-  Grid2, Divider, Paper, TextField, Button, Typography, Container,
+  Grid2, Divider, Paper, TextField, Button, Container,
 } from '@mui/material';
 import ChatHistory from './ChatHistory';
 
-const Chat = () => {
+const ChatForm = () => {
   const [chatInput, setChatInput] = useState<string>('');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -26,11 +26,7 @@ const Chat = () => {
     <Grid2 container>
       <Container>
         <Paper square={false}>
-          <Typography variant="h6" style={{ paddingLeft: '16px' }}>
-            Chat History
-          </Typography>
-          <Divider />
-          {chatInput && <ChatHistory chatInput={chatInput} />}
+          <ChatHistory chatInput={chatInput} />
           <Divider />
           <form onSubmit={handleSubmit} style={{ display: 'flex', alignItems: 'center' }}>
             <TextField
@@ -49,4 +45,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default ChatForm;

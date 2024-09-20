@@ -1,13 +1,13 @@
 'use client';
 
-import Chat from '@/components/Chat';
+import ChatForm from '@/components/ChatForm';
 import { ChatHistoryProvider } from '@/contexts/ChatHistoryContext';
 
 const Home = () => {
   return (
     <main>
       <ChatHistoryProvider>
-        <Chat />
+        <ChatForm />
       </ChatHistoryProvider>
     </main>
   );

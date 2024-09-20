@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import getChatResponse from '@/lib/chat';
 import {
-  List, ListItem, ListItemAvatar, ListItemText, ListSubheader, Avatar, Paper,
+  List, ListSubheader, Typography, Divider,
 } from '@mui/material';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import SmartToySharpIcon from '@mui/icons-material/SmartToySharp';
+import ChatOutput from '@/components/ChatOutput';
 import { useChatHistory } from '../contexts/ChatHistoryContext';
 
 interface ChatHistoryProps {
@@ -15,6 +16,8 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({ chatInput }) => {
   const { chatHistory, setChatHistory } = useChatHistory();
 
   useEffect(() => {
+    if (!chatInput) return;
+
     const fetchChatResponse = async () => {
       const chatResponse = await getChatResponse(chatInput);
       const currentTime = new Date();
@@ -34,48 +37,20 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({ chatInput }) => {
   }, [chatInput, setChatHistory]);
 
   return (
-    chatHistory && chatHistory.map((chatHistoryEntry) => (
-      <List key={chatHistoryEntry.time.getTime()}>
-        <List>
+    <>
+      <Typography variant="h6" style={{ paddingLeft: '16px', backgroundColor: '#f5f5f5' }}>
+        Chat History
+      </Typography>
+      <Divider />
+      { chatHistory.map((chatHistoryEntry) => (
+        <List key={chatHistoryEntry.time.getTime()} style={{ display: 'flex', flexDirection: 'column' }}>
           <ListSubheader>{chatHistoryEntry.time.toLocaleString()}</ListSubheader>
-          <Paper
-            elevation={3}
-            style={{
-              padding: '10px', borderRadius: '10px', backgroundColor: '#e0f7fa', width: 'fit-content',
-            }}
-          >
-            <ListItem id="chat-input">
-              <ListItemAvatar>
-                <Avatar>
-                  <AccountBoxIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText>
-                {chatHistoryEntry.input}
-              </ListItemText>
-            </ListItem>
-          </Paper>
+          <ChatOutput backGroundColor="#e0f7fa" chatHistory={chatHistoryEntry.input} icon={<AccountBoxIcon />} />
           <br />
-          <Paper
-            elevation={3}
-            style={{
-              padding: '10px', borderRadius: '10px', backgroundColor: '#f1f8e9', width: 'fit-content',
-            }}
-          >
-            <ListItem id="chat-output" style={{ justifyContent: 'flex-end' }}>
-              <ListItemAvatar>
-                <Avatar>
-                  <SmartToySharpIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText style={{ flex: 'inherit' }}>
-                {chatHistoryEntry.output}
-              </ListItemText>
-            </ListItem>
-          </Paper>
+          <ChatOutput backGroundColor="#f1f8e9" chatHistory={chatHistoryEntry.output} icon={<SmartToySharpIcon />} style={{ alignSelf: 'flex-end' }} />
         </List>
-      </List>
-    ))
+      ))}
+    </>
   );
 };
 
