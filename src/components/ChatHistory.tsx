@@ -38,12 +38,12 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({ chatInput }) => {
 
   return (
     <>
-      <Typography variant="h6" style={{ paddingLeft: '16px', backgroundColor: '#f5f5f5' }}>
+      <Typography variant="h6" sx={{ paddingLeft: '16px', backgroundColor: '#f5f5f5' }}>
         Chat History
       </Typography>
       <Divider />
       { chatHistory.map((chatHistoryEntry) => (
-        <List key={chatHistoryEntry.time.getTime()} style={{ display: 'flex', flexDirection: 'column' }}>
+        <List key={chatHistoryEntry.time.getTime()} sx={{ display: 'flex', flexDirection: 'column' }}>
           <ListSubheader>{chatHistoryEntry.time.toLocaleString()}</ListSubheader>
           <ChatOutput backGroundColor="#e0f7fa" chatHistory={chatHistoryEntry.input} icon={<AccountBoxIcon />} />
           <br />

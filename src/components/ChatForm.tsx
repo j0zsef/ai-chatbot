@@ -33,11 +33,18 @@ const ChatForm = () => {
               required
               id="chat-input"
               defaultValue="Enter your message"
-              variant="standard"
+              variant="outlined"
               onFocus={handleFocus}
-              style={{ paddingLeft: '16px', flexGrow: 1 }}
+              sx={{ flexGrow: 1 }}
             />
-            <Button type="submit" style={{ marginLeft: 'auto' }}>Send</Button>
+            <Button
+              type="submit"
+              color="primary"
+              size="large"
+              variant="contained"
+            >
+              Send
+            </Button>
           </form>
         </Paper>
       </Container>

@@ -17,7 +17,7 @@ const ChatOutput: React.FC<ChatProps> = ({
     <div style={style}>
       <Paper
         elevation={3}
-        style={{
+        sx={{
           padding: '10px', borderRadius: '10px', backgroundColor: backGroundColor, width: 'fit-content',
         }}
       >
