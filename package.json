@@ -12,11 +12,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^0.0.66",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.0",
     "@mui/material": "^6.1.0",
     "@typescript-eslint/parser": "^8.4.0",
+    "ai": "^3.4.9",
     "next": "14.2.5",
     "openai": "^4.58.1",
     "pnpm": "^9.7.1",

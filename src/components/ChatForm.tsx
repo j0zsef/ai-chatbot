@@ -1,54 +1,43 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  Grid2, Divider, Paper, TextField, Button, Container,
+  TextField, Button, Box,
 } from '@mui/material';
-import ChatHistory from './ChatHistory';
 
-const ChatForm = () => {
-  const [chatInput, setChatInput] = useState<string>('');
+interface ChatFormProps {
+  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  input: string;
+}
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const input = event.currentTarget.elements.namedItem('chat-input') as HTMLInputElement;
-    if (!input || !input.value.trim()) return;
-    setChatInput(input.value.trim());
-    input.value = '';
-  };
-
-  const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    const input = event.target;
-    input.value = '';
-  };
-
+const ChatForm: React.FC<ChatFormProps> = ({ handleSubmit, handleInputChange, input }) => {
   return (
-    <Grid2 container>
-      <Container>
-        <Paper square={false}>
-          <ChatHistory chatInput={chatInput} />
-          <Divider />
-          <form onSubmit={handleSubmit} style={{ display: 'flex', alignItems: 'center' }}>
-            <TextField
-              required
-              id="chat-input"
-              defaultValue="Enter your message"
-              variant="outlined"
-              onFocus={handleFocus}
-              sx={{ flexGrow: 1 }}
-            />
-            <Button
-              type="submit"
-              color="primary"
-              size="large"
-              variant="contained"
-            >
-              Send
-            </Button>
-          </form>
-        </Paper>
-      </Container>
-    </Grid2>
+    <Box sx={{
+      display: 'flex', marginTop: 'auto', borderTop: '2px solid #f5f5f5',
+    }}
+    >
+      <form onSubmit={handleSubmit} style={{ display: 'flex', width: '100%' }}>
+        <TextField
+          required
+          id="chat-input"
+          onChange={handleInputChange}
+          placeholder="Enter your message"
+          variant="outlined"
+          value={input}
+          fullWidth
+          sx={{ flexGrow: 1 }}
+        />
+        <Button
+          type="submit"
+          color="primary"
+          size="large"
+          variant="contained"
+        >
+          Send
+        </Button>
+      </form>
+    </Box>
   );
 };
 

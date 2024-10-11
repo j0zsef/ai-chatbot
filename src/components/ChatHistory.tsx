@@ -1,40 +1,26 @@
-import React, { useEffect } from 'react';
-import getChatResponse from '@/lib/chat';
+'use client';
+
+import React, { useRef, useEffect } from 'react';
 import {
   List, ListSubheader, Typography, Divider,
 } from '@mui/material';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import SmartToySharpIcon from '@mui/icons-material/SmartToySharp';
 import ChatOutput from '@/components/ChatOutput';
-import { useChatHistory } from '../contexts/ChatHistoryContext';
+import { Message } from 'ai';
 
 interface ChatHistoryProps {
-  chatInput: string;
+  chatHistory: Message[];
 }
 
-const ChatHistory: React.FC<ChatHistoryProps> = ({ chatInput }) => {
-  const { chatHistory, setChatHistory } = useChatHistory();
+const ChatHistory: React.FC<ChatHistoryProps> = ({ chatHistory }) => {
+  const latestMessageRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!chatInput) return;
-
-    const fetchChatResponse = async () => {
-      const chatResponse = await getChatResponse(chatInput);
-      const currentTime = new Date();
-      setChatHistory((prevChatHistory) => {
-        return [
-          {
-            input: chatInput,
-            output: chatResponse,
-            time: currentTime,
-          },
-          ...(prevChatHistory || []),
-        ];
-      });
-    };
-
-    fetchChatResponse();
-  }, [chatInput, setChatHistory]);
+    if (latestMessageRef.current) {
+      latestMessageRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [chatHistory]);
 
   return (
     <>
@@ -42,12 +28,21 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({ chatInput }) => {
         Chat History
       </Typography>
       <Divider />
-      { chatHistory.map((chatHistoryEntry) => (
-        <List key={chatHistoryEntry.time.getTime()} sx={{ display: 'flex', flexDirection: 'column' }}>
-          <ListSubheader>{chatHistoryEntry.time.toLocaleString()}</ListSubheader>
-          <ChatOutput backGroundColor="#e0f7fa" chatHistory={chatHistoryEntry.input} icon={<AccountBoxIcon />} />
-          <br />
-          <ChatOutput backGroundColor="#f1f8e9" chatHistory={chatHistoryEntry.output} icon={<SmartToySharpIcon />} style={{ alignSelf: 'flex-end' }} />
+      { chatHistory.map((chatHistoryEntry, index) => (
+        <List key={chatHistoryEntry.id} sx={{ display: 'flex', flexDirection: 'column' }} ref={index === chatHistory.length - 1 ? latestMessageRef : null}>
+          <ListSubheader>{chatHistoryEntry.createdAt?.toLocaleString()}</ListSubheader>
+          { chatHistoryEntry.role === 'user'
+          && (
+          <ChatOutput backGroundColor="#e0f7fa" icon={<AccountBoxIcon />}>
+            {chatHistoryEntry.content}
+          </ChatOutput>
+          )}
+          { chatHistoryEntry.role !== 'user'
+              && (
+              <ChatOutput backGroundColor="#f1f8e9" icon={<SmartToySharpIcon />}>
+                {chatHistoryEntry.content}
+              </ChatOutput>
+              )}
         </List>
       ))}
     </>

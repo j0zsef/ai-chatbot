@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import {
   Avatar, ListItem, ListItemAvatar, ListItemText, Paper,
@@ -5,13 +7,13 @@ import {
 
 interface ChatProps {
     backGroundColor: string;
-    chatHistory: string;
+    children: React.ReactNode;
     icon: React.ReactNode;
     style?: React.CSSProperties;
 }
 
 const ChatOutput: React.FC<ChatProps> = ({
-  chatHistory, backGroundColor, icon, style,
+  backGroundColor, children, icon, style,
 }) => {
   return (
     <div style={style}>
@@ -28,7 +30,7 @@ const ChatOutput: React.FC<ChatProps> = ({
             </Avatar>
           </ListItemAvatar>
           <ListItemText>
-            {chatHistory}
+            {children}
           </ListItemText>
         </ListItem>
       </Paper>
